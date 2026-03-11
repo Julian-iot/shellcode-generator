@@ -2,9 +2,9 @@
 
 ​												**[中文](https://github.com/Julian-iot/shellcode-generator/blob/main/README.md)[|English]()**
 
-​	ARM MIPS shellcode generator with no bad bytes
+ARM MIPS shellcode generator with no bad bytes
 
-​    在漏洞验证过程中，Shellcode 必须被完整注入并成功执行，但目标程序常因使用 strcpy、sprintf 等字符串函数，或协议解析与输入校验机制，对 \x00 等坏字符进行截断或过滤，导致载荷失效。该问题不仅影响传统栈溢出利用，在 ROP 场景下同样突出：部分 gadget 地址包含坏字节，难以完整写入，迫使通过运行时计算等方式绕过，显著增加复杂度。因此这款工具将解决这一问题。
+在漏洞验证过程中，Shellcode 必须被完整注入并成功执行，但目标程序常因使用 strcpy、sprintf 等字符串函数，或协议解析与输入校验机制，对 \x00 等坏字符进行截断或过滤，导致载荷失效。该问题不仅影响传统栈溢出利用，在 ROP 场景下同样突出：部分 gadget 地址包含坏字节，难以完整写入，迫使通过运行时计算等方式绕过，显著增加复杂度。因此这款工具将解决这一问题。
 
 **支持：**mips little、mips big、arm little
 
