@@ -17,7 +17,7 @@ sudo apt update
 sudo apt install qemu-user qemu-user-static qemu-system qemu-utils
 ```
 
-运行时工具会从toolchains.bootlin.com平台下载工具链
+运行时工具会从toolchains.bootlin.com平台下载对应工具链。
 
 # 用法
 
