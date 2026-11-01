@@ -6,7 +6,7 @@ ARM MIPS shellcode generator with no bad bytes
 
 在漏洞验证过程中，Shellcode 必须被完整注入并成功执行，但目标程序常因使用 strcpy、sprintf 等字符串函数，或协议解析与输入校验机制，对 \x00 等坏字符进行截断或过滤，导致载荷失效。该问题不仅影响传统栈溢出利用，在 ROP 场景下同样突出：部分 gadget 地址包含坏字节，难以完整写入，迫使通过运行时计算等方式绕过，显著增加复杂度。因此这款工具将解决这一问题。
 
-**支持：**mips little、mips big、arm little
+**支持：**mips little、mips big、arm little、arm big（默认 BE8，加 `-be32` 切 BE32）
 
 
 # 安装（Ubuntu / Debian / Kali）
@@ -21,26 +21,25 @@ sudo apt install qemu-user qemu-user-static qemu-system qemu-utils
 
 # 用法
 
-![image-20260311221916490](./images/image-20260311221916490.png)
+![image-20261101123110239](./images/image-20261101123110239.png)
 
 ```
-./shellcode-generator_v1_linux_amd64 -arch mips -e little -cmd "echo 00" -xor -v
+python3 main.py mips -e little -c "echo 00000 " -x -v
 ```
 
-![image-20260311222424696](./images/image-20260311222424696.png)
+![image-20261101123314731](./images/image-20261101123314731.png)
 
 ```
-./shellcode-generator_v1_linux_amd64 -arch mips -e little -cmd "echo 00" -short -v
+python3 main.py mips -e little -c "echo 111111" -short -v
 ```
 
-![image-20260311222504507](./images/image-20260311222504507.png)
+![image-20261101123234804](./images/image-20261101123234804.png)
 
 ```
-./shellcode-generator_v1_linux_amd64 -arch arm -e little -cmd "echo 00" -xor -v
-./shellcode-generator_v1_linux_amd64 -arch mips -e little -cmd "id" -rp -12 -20 
+python3 main.py mips -e little -c "echo 1111" -v -rp f32 -12 -20 
 ```
 
-![image-20260311222644507](./images/image-20260311222644507.png)
+![image-20261101123437901](./images/image-20261101123437901.png)
 
 # 贡献
 
