@@ -157,11 +157,11 @@ def main():
     if args.arch.lower() == "mips":
         if endian =="little" :
             CONFIG[
-                'MIPS_TOOLCHAIN_PATH'] = f"{CONFIG['current_user']}/tools/mips32el--glibc--stable-2024.05-1/bin/mipsel-buildroot-linux-gnu-"
+                'MIPS_TOOLCHAIN_PATH'] = f"{CONFIG['TOOLCHAINS_PATH']}/mips32el--glibc--stable-2024.05-1/bin/mipsel-buildroot-linux-gnu-"
             CONFIG['QEMU_PATH'] = "qemu-mipsel"
         else:
             CONFIG[
-                'MIPS_TOOLCHAIN_PATH'] = f"{CONFIG['current_user']}/tools/mips32--glibc--stable-2024.05-1/bin/mips-buildroot-linux-gnu-"
+                'MIPS_TOOLCHAIN_PATH'] = f"{CONFIG['TOOLCHAINS_PATH']}/mips32--glibc--stable-2024.05-1/bin/mips-buildroot-linux-gnu-"
             CONFIG['QEMU_PATH'] = "qemu-mips"
         # --- 1. 检查工具链 ---
         check_toolschain("MIPS_TOOLCHAIN_PATH", args.arch, args.endian)
@@ -228,11 +228,11 @@ def main():
     elif args.arch.lower() == "arm":
         if endian == "little":
             CONFIG[
-                'ARM_TOOLCHAIN_PATH'] = f"{CONFIG['current_user']}/tools/armv7-eabihf--uclibc--stable-2024.05-1/bin/arm-buildroot-linux-uclibcgnueabihf-"
+                'ARM_TOOLCHAIN_PATH'] = f"{CONFIG['TOOLCHAINS_PATH']}/armv7-eabihf--uclibc--stable-2024.05-1/bin/arm-buildroot-linux-uclibcgnueabihf-"
             CONFIG['ARM_PATH'] = "qemu-arm"
         else:
             CONFIG[
-                'ARM_TOOLCHAIN_PATH'] = f"{CONFIG['current_user']}/tools/armebv7-eabihf--uclibc--stable-2024.05-1/bin/armeb-buildroot-linux-uclibcgnueabihf-"
+                'ARM_TOOLCHAIN_PATH'] = f"{CONFIG['TOOLCHAINS_PATH']}/armebv7-eabihf--uclibc--stable-2024.05-1/bin/armeb-buildroot-linux-uclibcgnueabihf-"
             CONFIG['ARM_PATH'] = "qemu-armeb"
         # --- 1. 检查工具链 ---
         check_toolschain("ARM_TOOLCHAIN_PATH", args.arch, args.endian)

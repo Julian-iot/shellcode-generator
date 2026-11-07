@@ -5,7 +5,7 @@ from pwn import *
 import logging
 
 current_user = os.path.expanduser('~')
-mkdir_dir = os.path.join(current_user, "tools")
+mkdir_dir = os.path.join(current_user, "tools", "toolchains")
 os.makedirs(mkdir_dir, exist_ok=True)
 os.makedirs("shellcode_directory", exist_ok=True)
 
@@ -21,7 +21,7 @@ CONFIG = {
     "DOWNLOAD_ARMEB_TOOLCHAIN_URL": "https://toolchains.bootlin.com/downloads/releases/toolchains/armebv7-eabihf/tarballs/armebv7-eabihf--uclibc--stable-2024.05-1.tar.xz",
     "DOWNLOAD_ARM_TOOLCHAIN_URL": "https://toolchains.bootlin.com/downloads/releases/toolchains/armv7-eabihf/tarballs/armv7-eabihf--uclibc--stable-2024.05-1.tar.xz",
     "BAD_BYTES": ['00', '3B', '0a', '0b', '0c', '0d', '20', '09'],
-    "current_user": current_user
+    "TOOLCHAINS_PATH": mkdir_dir,
 }
 
 
@@ -82,7 +82,7 @@ def check_toolschain(path, arch, endian):
 
             # 构建并执行 wget 命令。-O 参数指定输出文件路径。
             with subprocess.Popen(
-                    ["wget", path, "-O", f"/{current_user}/tools/{filename}"],
+                    ["wget", path, "-O", f"{CONFIG['TOOLCHAINS_PATH']}/{filename}"],
                     stderr=subprocess.PIPE,
                     bufsize=1,  # 缓冲区大小为1，确保实时性
                     universal_newlines=True  # 以文本模式读取输出
@@ -101,7 +101,7 @@ def check_toolschain(path, arch, endian):
                     raise subprocess.CalledProcessError(
                         process.returncode, process.args
                     )
-            print(f"👍 下载成功，文件已保存至: /{current_user}/tools/{filename}")
+            print(f"👍 下载成功，文件已保存至: {CONFIG['TOOLCHAINS_PATH']}/{filename}")
         except FileNotFoundError:
             print("❌ 错误: 'wget' 命令未找到。请确保它已安装并位于系统的 PATH 环境变量中。")
             return False
@@ -113,10 +113,10 @@ def check_toolschain(path, arch, endian):
 
         # --- 4. 创建目录并使用 tar 解压文件 ---
         try:
-            print(f"📦 正在将 '/{current_user}/tools/{filename}' 解压到 '/{current_user}/tools/'...")
-            subprocess.run(["tar", "-xf", f"/{current_user}/tools/{filename}", "-C", f"/{current_user}/tools/"],
+            print(f"📦 正在将 '{CONFIG['TOOLCHAINS_PATH']}/{filename}' 解压到 '{CONFIG['TOOLCHAINS_PATH']}/'...")
+            subprocess.run(["tar", "-xf", f"{CONFIG['TOOLCHAINS_PATH']}/{filename}", "-C", f"{CONFIG['TOOLCHAINS_PATH']}/"],
                            check=True, capture_output=True)
-            print(f"\n🎉 任务完成！文件已成功下载并解压到 /home/{current_user}/tools/{filename}。")
+            print(f"\n🎉 任务完成！文件已成功下载并解压到 {CONFIG['TOOLCHAINS_PATH']}/{filename}。")
         except FileNotFoundError:
             print("❌ 错误: 'tar' 命令未找到。请确保它已安装并位于系统的 PATH 环境变量中。")
             return False
